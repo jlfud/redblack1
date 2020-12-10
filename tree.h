@@ -1,19 +1,31 @@
+#ifndef TREE_H
+#define TREE_H
+
 #include <iostream>
 #include <cstring>
 
 using namespace std;
 
 struct node{
-  int color;
+  bool isred = false;
   int data;
   node* left = NULL;
-  node* right = NULL; 
+  node* right = NULL;
+  node* parent = NULL;
 };
 class tree{
  public:
   tree();
   ~tree();
-  void add(int);
- private:
-  node* root = NULL; 
+  void insert(int);
+  void display(node*); 
+  void leftrotate(node*);
+  void rightrotate(node*);
+  void build(node*);
+  node* getRoot();
+private:
+  node* root = NULL;
+  int bheight = 0;
 };
+
+#endif

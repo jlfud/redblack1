@@ -27,7 +27,7 @@ int main(){
       parse(t, in);
     }
     else if(strcmp(in, "print")==0){
-      t->display(t->getRoot());
+      t->display(t-);
     }
     else if(strcmp(in, "quit")==0){
       return 0;
@@ -56,4 +56,3 @@ void parse(tree* &t, char in[80]){
   }
   //insert the last number
   t->insert(atoi(token));
-}
