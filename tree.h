@@ -7,7 +7,7 @@
 using namespace std;
 
 struct node{
-  bool isred = false;
+  bool isred = true;
   int data;
   node* left = NULL;
   node* right = NULL;

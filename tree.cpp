@@ -16,7 +16,7 @@ void tree::insert(int num){
   if(root == NULL){
     n->isred = false;
     root = n;
-    return; 
+    return;
   }
   node* current = root;
   node* p = current; 
@@ -76,11 +76,64 @@ void tree::leftrotate(node* x){
     x->parent = y;
   }
 }
-void tree::rightrotate(node* x){
-
+void tree::rightrotate(node* y){
+  node* x = y->left;
+  y->left = x->right;
+  if(x->right != NULL){
+    x->right->parent = x;
+  }
+  x->parent = y->parent;
+  if(y->parent == NULL){
+    this->root = x; 
+  }
+  else{
+    if(y = y->parent->right){
+      y->parent->right = x; 
+    }
+    else{
+      y->parent->left = x; 
+    }
+    x->right = y;
+    y->parent = x; 
+  }
+  
 }
 void tree::build(node* n){
-
+  //case 1 taken care of in insert
+  if(!n->parent->isred){
+    return;
+  }
+  else if(n->parent->right != NULL && n->parent->left != NULL){
+    node* uncle = new node();
+    if(n->parent->left == n){
+      //n is the left node
+      uncle = n->parent->right; 
+    }
+    else{
+      uncle = n->parent->left;
+    }
+    if(n->isred && uncle->isred){
+      cout << "3" << endl;
+      uncle->isred = false; 
+      n->parent->isred = false;
+      n->parent->parent->isred = true;
+      this->build(n->parent->parent);
+    }
+    //on case 4
+    if(!uncle->isred){
+      cout << "4/5" << endl;
+      if(!(n->parent->right == n && n->parent->parent->left == n->parent) || (!(n->parent->left == n && n->parent->parent->right == n->parent))){
+	//case 5
+	rightrotate(n->parent);
+	bool pred = n->parent->isred;
+	n->parent->isred = n->parent->parent->isred;
+	n->parent->parent->isred = pred; 
+      }
+      else{
+	leftrotate(n->parent);
+      }
+    }
+  }
 }
 node* tree::getRoot(){
   return root; 
