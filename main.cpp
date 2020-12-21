@@ -28,6 +28,7 @@ int main(){
     }
     else if(strcmp(in, "print")==0){
       t->display(t->getRoot());
+      cout << endl;
     }
     else if(strcmp(in, "quit")==0){
       return 0;

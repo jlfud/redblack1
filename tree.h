@@ -25,7 +25,6 @@ class tree{
   node* getRoot();
 private:
   node* root = NULL;
-  int bheight = 0;
 };
 
 #endif
