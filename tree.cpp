@@ -120,22 +120,21 @@ void tree::build(node* n){
       n->parent->isred = false;
       n->parent->parent->isred = true;
       if(n->parent->parent != root){
-	this->build(n->parent->parent);
+	if(n->parent->parent->parent->parent != NULL){
+	   this->build(n->parent->parent);
+	}
       }
       else{
 	return;
       }
     }
   }
-  if(n->parent == NULL){
-    return;
-  }
   node* p = n->parent;
   node* g = n->parent->parent;
   if(n == p->right && p == g->left){
     leftrotate(p);
     n = n->left;
-  }
+  } 
   else if(n == p->left && p == g->right){
     rightrotate(p);
     n = n->right; 
