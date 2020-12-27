@@ -11,9 +11,11 @@ tree::~tree(){
 
 }
 void tree::insert(int num){
+  //insert like normal binary tree
   node* n = new node();
   n->data = num;
   if(root == NULL){
+    //covers case 1, root is null
     n->isred = false;
     root = n;
     return;
@@ -21,6 +23,7 @@ void tree::insert(int num){
   node* current = root;
   node* p = current; 
   while(current != NULL){
+    //loop until the place to insert is found
     p = current; //p is the parent of the null node
     if(n->data < current->data){
       current = current->left;
@@ -30,21 +33,26 @@ void tree::insert(int num){
     }
   }
   n->parent = p;
+  //insert, updating parent and children accordingly
   if(n->data < n->parent->data){
     n->parent->left = n; 
   }
   else{
     n->parent->right = n; 
   }
+  //fix to maintain red black properties
   this->build(n); 
 }
 void tree::display(node* current){
   if(current != NULL){
+    //dispaly with left child on the left and right child on the right
     display(current->left);
     if(current==root){
+      //no parent is we are at the root
       cout << current->data << "(B) "; 
     }
     else{
+      //print with indication of red/black and parent
       if(current->isred){
 	cout << current->data << "(R, " << current->parent->data << ") "; 
       }
@@ -74,8 +82,6 @@ void tree::leftrotate(node* n){
     else if(n == p->right){
       p->right = nn; 
     }
-  }
-  else{
     root = p;
   }
   nn->parent = p;
@@ -89,7 +95,6 @@ void tree::rightrotate(node* n){
   n->left = nn->right;
   nn->right = n;
   n->parent = nn;
-
   if(n->left != NULL){
     n->left->parent = n;
   }
@@ -100,9 +105,7 @@ void tree::rightrotate(node* n){
     else if(n == p->right){
       p->right = nn; 
     }
-  }
-  else{
-    root = p;
+    root = nn;
   }
   nn->parent = p; 
 }
