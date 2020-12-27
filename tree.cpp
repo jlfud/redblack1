@@ -64,9 +64,11 @@ void tree::display(node* current){
   }
 }
 void tree::leftrotate(node* n){
-  node* nn = n->right;
+  //rotate left with node
+  node* nn = n->right; //new n
   node* p = n->parent; 
   if(nn == NULL){
+    //if nn is null, finish
     return;
   }
   n->right = nn->left;
@@ -82,11 +84,14 @@ void tree::leftrotate(node* n){
     else if(n == p->right){
       p->right = nn; 
     }
-    root = p;
   }
   nn->parent = p;
+  if(nn->parent == NULL){
+    root = nn; 
+  }
 }
 void tree::rightrotate(node* n){
+  //rotate right with node
   node* nn = n->left;
   node* p = n->parent;
   if(nn == NULL){
@@ -105,9 +110,11 @@ void tree::rightrotate(node* n){
     else if(n == p->right){
       p->right = nn; 
     }
+  }
+  nn->parent = p;
+  if(nn->parent==NULL){
     root = nn;
   }
-  nn->parent = p; 
 }
 void tree::build(node* n){
   //case 1 taken care of in insert
@@ -137,9 +144,10 @@ void tree::build(node* n){
 	return;
       }
     }
-  } 
+  }
   node* p = n->parent;
   node* g = n->parent->parent;
+  //case 4
   if(n == p->right && p == g->left){
     leftrotate(p);
     n = n->left;
