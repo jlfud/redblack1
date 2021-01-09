@@ -126,46 +126,71 @@ void tree::build(node* n){
   if(n->parent->parent->left == n->parent){
     uncle = n->parent->parent->right;
   }
-  else{
+  else if(n->parent->parent->right == n->parent){
     uncle = n->parent->parent->left;
   }
-  if(uncle != NULL && n->parent != NULL){
+  if(uncle != NULL && n->parent != NULL ){
     //case 3
-    if(n->parent->isred && uncle->isred){
+    if(uncle->isred){
       uncle->isred = false; 
       n->parent->isred = false;
       n->parent->parent->isred = true;
       if(n->parent->parent != root){
 	if(n->parent->parent->parent->parent != NULL){
-	   this->build(n->parent->parent);
+	  this->build(n->parent->parent);
 	}
       }
       else{
 	return;
       }
     }
-  }
-  node* p = n->parent;
-  node* g = n->parent->parent;
-  //case 4
-  if(n == p->right && p == g->left){
-    leftrotate(p);
-    n = n->left;
-  } 
-  else if(n == p->left && p == g->right){
-    rightrotate(p);
-    n = n->right; 
-  }
-  p = n->parent;
-  g = p->parent;
-  if(n == p->left){
-    rightrotate(g); 
+    else{
+      node* p = n->parent;
+      node* g = n->parent->parent;
+      //case 4
+      if(n == p->right && p == g->left){
+	leftrotate(p);
+	n = n->left;
+      }
+      else if(n == p->left && p == g->right){
+	rightrotate(p);
+	n = n->right;
+      }
+      p = n->parent;
+      g = p->parent;
+      if(n == p->left){
+	rightrotate(g);
+      }
+      else{
+	leftrotate(g);
+      }
+      p->isred = false;
+      g->isred = true;
+    }
   }
   else{
-    leftrotate(g);
+    node* p = n->parent;
+    node* g = n->parent->parent;
+    //case 4
+    if(n == p->right && p == g->left){
+      leftrotate(p);
+      n = n->left;
+    }
+    else if(n == p->left && p == g->right){
+      rightrotate(p);
+      n = n->right;
+    }
+    p = n->parent;
+    g = p->parent;
+    if(n == p->left){
+      rightrotate(g);
+    }
+    else{
+      leftrotate(g);
+    }
+    p->isred = false;
+    g->isred = true;
   }
-  p->isred = false;
-  g->isred = true;
 }
 node* tree::getRoot(){
   return root; 

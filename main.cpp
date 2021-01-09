@@ -21,6 +21,8 @@ int main(){
       cout << "value to input: " << endl;
       cin >> intin; 
       t->insert(intin); 
+      //t->display(t->getRoot());
+      //cout << endl;
     }
     else if(strcmp(in, "read")==0){
       //get the file abd parse the content of the file
